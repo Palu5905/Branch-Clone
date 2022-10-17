@@ -25,12 +25,7 @@ router.get('/test-me', function (req, res) {
    console.log(movies.array2);
    console.log(movies.finallist);
 
-
-
-    
-
-
-    res.send('My first ever api!')
+    res.send(month.finalDMYHours);
 
     //To be tried what happens if we send multiple response
     //res.send('My second api!')
