@@ -6,7 +6,7 @@ const router = express.Router();
 //     console.log('My batch is', abc.name)
 //     abc.printName()
 //     res.send('My second ever api!')
-// });
+// })
 
 // router.get('/students', function (req, res){
 //     console.log("The path params in the request are : ", req.params)
@@ -23,13 +23,13 @@ router.get('/students/:studentName', function(req, res){
     // key is the variable in the route
     // value is whatever dynamic value sent in the request url
     let myParams = req.params
-
+  
     // params attribute is fixed in a request object
     // params contains the path parameters object
     console.log("The path params in the request are : ", myParams)
-    res.send('The full name is ' + myParams.studentName )
+    res.send('The full name is ' + myParams.studentName)
 })
-
+ 
 // Example 2 for path params
 router.get('/student-details/:name', function(req, res){
     let requestParams = req.params
@@ -46,12 +46,17 @@ router.get('/movies',function(req,res){
  })
  
  ///////// Probleam No 2
-router.get('/movies/:index', function (req,res){
+router.get('/movies/:box', function (req,res){
    const movie = ["The-Avengers","Doctor Strange","Spider-Man","Black Panther","Thor"]
-   const nameOfmovie =req.params.index
-   res.send(movie[nameOfmovie]);
+   const nameOfmovie =req.params.box
+   if(nameOfmovie>(movie.length -1)){
+    res.send("Inviled Input")
+   }else{
+   }
+res.send(movie[nameOfmovie]);
 })
- 
+
+
 ///////// Probleam No 3
 router.get('/Film',function(req,res){
   const moviearray =  [ { id: 1,
