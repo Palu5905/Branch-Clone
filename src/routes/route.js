@@ -133,7 +133,6 @@ router.post("/players-list",function (req, res) {
 })
 
 <<<<<<< Updated upstream
-<<<<<<< Updated upstream
 router.get("/shoes", function(req, res){
     let queryParams = req.query
     let brand = queryParams.brand
@@ -216,10 +215,6 @@ router.get("/films/:filmId", function(req, res){
 
 module.exports = router;
 // adding this comment for no reason
-=======
-
-module.exports = router;
->>>>>>> Stashed changes
 =======
 
 module.exports = router;
