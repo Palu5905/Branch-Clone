@@ -1,4 +1,5 @@
 const { count } = require("console")
+const bookModel = require("../models/bookModel")
 const BookModel= require("../models/bookModel")
 
 const createBook= async function (req, res) {
@@ -41,6 +42,43 @@ const deleteBooks= async function (req, res) {
      
      res.send( { msg: allBooks})
 }
+//////==========================================
+
+const bookdata = async function(req,res){
+    let recvidData =req.body
+    let saveData = await bookModel.create(recvidData)
+    res.send(saveData)
+
+}
+
+const chetanBook= async function (req, res) {
+    let array= await bookModel.find({author_name :"Chetan Bhagat"})
+    const[obj]=array
+    let id =obj.author_id
+    
+    let allbooks= await bookModel.find({author_id:id})
+    res.send({msg: allbooks})
+}
+
+
+
+const price = async function (req, res) {
+
+    let allbooks= await bookModel.find({ price : { $gte: 50, $lte: 100} })
+    let a =[]
+
+    for(i of allbooks){
+        let b =await bookModel.findOne({author_id:(i.author_id)}).select({author_name:1,_id:0})
+        
+         a.push(i)
+         a.push(b)
+    }
+    res.send({msg:a})
+}
+
+module.exports.price=price;
+module.exports.chetanBook=chetanBook;
+module.exports.bookdata=bookdata;
 
 
 
