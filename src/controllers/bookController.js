@@ -51,6 +51,22 @@ const bookdata = async function(req,res){
 
 }
 
+const practice =async function(req,res){
+  let practiceData = await bookModel.find().populate("author_id")
+  res.send(practiceData);
+}
+
+
+const updatee =async function(req,res){
+    let Data = await bookModel.find({name:/^pr/})
+    res.send(Data);
+}
+module.exports.updatee=updatee;
+module.exports.practice=practice;
+
+
+
+
 const chetanBook= async function (req, res) {
     let array= await bookModel.find({author_name :"Chetan Bhagat"})
     const[obj]=array

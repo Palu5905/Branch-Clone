@@ -26,13 +26,14 @@ const mongoose = require('mongoose');
 // module.exports = mongoose.model('User', userSchema) //users
 
 const authorName = new mongoose.Schema({
-    author_id :{
-        type:Number,
-        required:true
-    },
+    
     author_Name:String,
     age:Number,
-    address:String
+    address:String,
+    author_id:{
+        type:Number,
+        required:true
+    }
 })
 
 module.exports =mongoose.model("autor",authorName);

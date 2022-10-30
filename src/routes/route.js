@@ -29,6 +29,10 @@ router.get("/price-book", BookController.price)
 
 
 
+router.get("/update-id",BookController.updatee);
+
+router.get("/by-id",BookController.practice);
+
 //MOMENT JS
 const moment = require('moment');
 router.get("/dateManipulations", function (req, res) {

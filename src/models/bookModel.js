@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const ObId =mongoose.Schema.Types.ObjectId;
 
 // const bookSchema = new mongoose.Schema( {
 //     bookName: String, 
@@ -26,8 +27,8 @@ const mongoose = require('mongoose');
 const booklist = new mongoose.Schema({
     name:String,
     author_id:{
-        type:Number,
-        required:true
+       type:ObId,
+       ref:'autor'
     },
     price:Number,
     ratings:Number
