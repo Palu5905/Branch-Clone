@@ -10,7 +10,7 @@ const createBook= async function (req, res) {
 }
 
 const getBooksData= async function (req, res) {
-    let books = await bookModel.find()
+    let books = await bookModel.find().select({_id:0})
     res.send({data: books})
 }
 
@@ -32,7 +32,7 @@ const AllDate = async function (req, res) {
 
 
 const getBooksWithAuthorDetails = async function (req, res) {
-    let specificBook = await bookModel.find().populate('publisher_id').populate('author_id')
+    let specificBook = await bookModel.find().populate('publisher_id').populate('author_id').select({_id:0})
     res.send({data: specificBook})
 
 }
