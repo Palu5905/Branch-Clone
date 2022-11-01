@@ -15,18 +15,13 @@ const basicCode= async function(req, res) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+    const jio1 = async function (req, res) {
+        console.log("Print-Current-DMY");
+      };
+      
+      const jio2 = async function (req, res) {
+          console.log("Print-Current-DMY");
+        };
 
 
 
@@ -44,3 +39,5 @@ const getUsersData= async function (req, res) {
 module.exports.createUser= createUser
 module.exports.getUsersData= getUsersData
 module.exports.basicCode= basicCode
+module.exports.jio1=jio1
+module.exports.jio2=jio2

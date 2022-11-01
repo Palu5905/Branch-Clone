@@ -56,7 +56,10 @@ router.get("/basicRoute", commonMW.mid1, commonMW.mid2, commonMW.mid3, commonMW.
 // router.get("/basicRoute3", commonMW.mid2, UserController.basicCode3)
 // router.get("/basicRoute4", commonMW.mid1, commonMW.mid4, UserController.basicCode4)
 
+router.get("/Times-Print",commonMW.mid5,UserController.jio1)
 
+
+router.get("/Times-Assigment",commonMW.mid5,UserController.jio2)
 
 
 module.exports = router;
