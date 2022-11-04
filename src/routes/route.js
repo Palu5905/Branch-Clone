@@ -1,20 +1,35 @@
 const express = require('express');
 const router = express.Router();
-const UserController= require("../controllers/userController")
-const BookController= require("../controllers/bookController")
-const commonMW = require ("../middlewares/commonMiddlewares")
+const UserController = require("../controllers/userController")
+const BookController = require("../controllers/bookController")
+const commonMW = require("../middlewares/commonMiddlewares")
+
+
 
 ///////========================================================
 
 
-const finalUserData =require("../controllers/userSchCOn")
-const finalProducatData=require("../controllers/productController")
-const finalorderData=require("../controllers/orderController")
+const finalUserData = require("../controllers/userSchCOn")
+const finalProducatData = require("../controllers/productController")
+const finalorderData = require("../controllers/orderController")
 
-router.post("/user-Data",finalUserData.userAPI)
-router.post("/producat-Data",finalProducatData.product)
-router.post("/order-Data",finalorderData.orderRE)
-router.get("/Final-AllData",finalorderData.orderAPI)
+router.post("/producat-Data", finalProducatData.product)
+router.post("/order-Data", commonMW.MyMiddleware, finalorderData.orderRE)
+router.post("/user-Data", commonMW.MyMiddleware, finalUserData.userAPI)
+router.post("/user-producat",commonMW.MyMiddleware, finalorderData.orderData)
+
+
+
+router.get("/Final-AllData", finalorderData.orderAPI)
+
+
+
+
+
+
+
+
+
 
 
 
@@ -24,9 +39,9 @@ router.get("/test-me", function (req, res) {
 
 //Can we set the 'next' input parameter in a route handler?
 //What is the primary difference between a middleware and a route handler?
-router.post("/createBook", commonMW.myMiddleware,BookController.createBook, function(req, res, next){
+router.post("/createBook", commonMW.myMiddleware, BookController.createBook, function (req, res, next) {
     res.send("Ending the cycle")
-}  )
+})
 
 router.post("/createUser", commonMW.myMiddleware, UserController.createUser)
 

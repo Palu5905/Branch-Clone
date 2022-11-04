@@ -40,6 +40,32 @@ const myOtherMiddleware = function(req, res, next){
     next()
 }
 
+
+
+const MyMiddleWare = function(req,res,next){
+    const freeUser =req.headers.isfreeappuser
+    
+    if(!freeUser){
+        return res.send("Mass: isFreeAppUser is inportent Plase Fill")
+    }else{
+        next()
+    }
+}
+
+module.exports.MyMiddleware=MyMiddleWare;
+
+
+
+
+
+
+
+
+
+
+
+
+
 module.exports.mid1= mid1
 module.exports.mid2= mid2
 module.exports.mid3= mid3
