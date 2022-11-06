@@ -15,4 +15,13 @@ router.get("/users/:userId", userController.getUserData)
 
 router.put("/users/:userId", userController.updateUser)
 
+
+///=========================================
+
+router.post("/userData",userController.userDataDB)
+router.post("/user-login",userController.loginData)
+router.get("/user-Info/:userId",userController.userInformation)
+router.delete("/Update-Data/:userId",userController.deletedAPI)
+
+
 module.exports = router;

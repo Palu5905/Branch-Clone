@@ -4,6 +4,74 @@ const userModel = require("../models/userModel");
 /*
   Read all the comments multiple times to understand why we are doing what we are doing in login api and getUserData api
 */
+///========================================================================================
+//=======Assignment JWT ============
+
+const userDataDB = async function(req,res){
+  let userInformation  =req.body
+  let finalData = await userModel.create(userInformation)
+  res.send(({UsreDetail:finalData}))
+}
+
+const loginData = async function(req,res){
+  let UserName = req.body.emailId
+  let pass = req.body.password
+
+  let userInfo =await userModel.findOne({emailId:UserName,password:pass});
+  if(!userInfo)
+  return res.send ({Status:false,massage:"Plase Enter Valid UserName And Password"})
+
+  let userToken = jwt.sign({
+    UserId:userInfo._id.toString()
+  },
+  'Lithium-Prahlad'
+  )
+  res.send({Status:true, MyToken:userToken})
+
+}
+
+
+const userInformation =async function(req,res){
+  let tokenHeader = req.headers["x-auth-token"];
+
+  if(!tokenHeader)
+  res.send({Status:false,Mass:"Plase Enter Token"})
+
+  let DecodedToken = jwt.verify(tokenHeader, "Lithium-Prahlad");
+  if (!DecodedToken)
+    return res.send({ status: false, massage: "token is invalid" });
+
+  let userId = req.params.userId;
+  let userDetails = await userModel.findById(userId);
+  if (!userDetails)
+    return res.send({ status: false, msg: "No such user exists" });
+
+  res.send({ status: true, data: userDetails });
+}
+
+
+const deletedAPI = async (req, res) => {
+  let userId = req.params.userId;
+  let user = await userModel.findById(userId);
+  if (!user) {
+    return res.send(`No User Found`);
+  }
+  let deletedUser = await userModel.findOneAndUpdate(
+    { _id: user },
+    { $set: { isDeleted: true } }
+  );
+  res.send({ status: true, data: deletedUser });
+};
+
+
+
+module.exports.userDataDB=userDataDB
+module.exports.loginData=loginData
+module.exports.userInformation=userInformation
+module.exports.deletedAPI=deletedAPI
+
+
+
 const createUser = async function (abcd, xyz) {
   //You can name the req, res objects anything.
   //but the first parameter is always the request 
