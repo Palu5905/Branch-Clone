@@ -7,46 +7,54 @@ const userModel = require("../models/userModel");
 ///========================================================================================
 //=======Assignment JWT ============
 
-const userDataDB = async function(req,res){
-  let userInformation  =req.body
-  let finalData = await userModel.create(userInformation)
-  res.send(({UsreDetail:finalData}))
+const userDataDB = async function (req, res) {
+  try {
+    let userInformation = req.body
+    if (Object.keys(userInformation).length != 0) {
+      let finalData = await userModel.create(userInformation)
+      res.status(201).send({ UsreDetail: finalData })
+    }
+    else res.status(400).send({ mass: "Inviled Request" })
+  }
+  catch (erro) {
+    res.status(500).send({ mass: erro })
+  }
 }
 
-const loginData = async function(req,res){
+const loginData = async function (req, res) {
+
   let UserName = req.body.emailId
   let pass = req.body.password
 
-  let userInfo =await userModel.findOne({emailId:UserName,password:pass});
-  if(!userInfo)
-  return res.send ({Status:false,massage:"Plase Enter Valid UserName And Password"})
+  let userInfo = await userModel.findOne({ emailId: UserName, password: pass });
+  if (!userInfo)
+    return res.status(400).send({ Status: false, massage: "Plase Enter Valid UserName And Password" })
 
   let userToken = jwt.sign({
-    UserId:userInfo._id.toString()
+    UserId: userInfo._id.toString()
   },
-  'Lithium-Prahlad'
+    'ithium-Prahlad'
   )
-  res.send({Status:true, MyToken:userToken})
-
+  res.status(201).send({ Status: true, MyToken: userToken })
 }
 
-
-const userInformation =async function(req,res){
+const userInformation = async function (req, res) {
   let tokenHeader = req.headers["x-auth-token"];
 
-  if(!tokenHeader)
-  res.send({Status:false,Mass:"Plase Enter Token"})
+  if (!tokenHeader)
+    res.status(400).send({ Status: false, Mass: "Plase Enter Token" })
 
-  let DecodedToken = jwt.verify(tokenHeader, "Lithium-Prahlad");
+  let DecodedToken = jwt.verify(tokenHeader, "ithium-Prahlad");
+  console.log(DecodedToken)
   if (!DecodedToken)
-    return res.send({ status: false, massage: "token is invalid" });
+    return res.status(400).send({ status: false, massage: "token is invalid" });
 
   let userId = req.params.userId;
   let userDetails = await userModel.findById(userId);
   if (!userDetails)
-    return res.send({ status: false, msg: "No such user exists" });
+    return res.status(400).send({ status: false, msg: "No such user exists" });
 
-  res.send({ status: true, data: userDetails });
+  res.status(201).send({ status: true, data: userDetails });
 }
 
 
@@ -54,21 +62,20 @@ const deletedAPI = async (req, res) => {
   let userId = req.params.userId;
   let user = await userModel.findById(userId);
   if (!user) {
-    return res.send(`No User Found`);
+    return res.status(400).send(`No User Found`);
   }
   let deletedUser = await userModel.findOneAndUpdate(
     { _id: user },
     { $set: { isDeleted: true } }
   );
-  res.send({ status: true, data: deletedUser });
+  res.status(201).send({ status: true, data: deletedUser });
 };
 
 
-
-module.exports.userDataDB=userDataDB
-module.exports.loginData=loginData
-module.exports.userInformation=userInformation
-module.exports.deletedAPI=deletedAPI
+module.exports.userDataDB = userDataDB
+module.exports.loginData = loginData
+module.exports.userInformation = userInformation
+module.exports.deletedAPI = deletedAPI
 
 
 
